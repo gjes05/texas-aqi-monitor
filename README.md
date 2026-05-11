@@ -1,6 +1,7 @@
 # Texas AQI Monitor
 
 **Live demo: [texas-aqi-monitor.vercel.app](https://texas-aqi-monitor.vercel.app)**
+<img width="1919" height="906" alt="Screenshot 2026-05-11 001548" src="https://github.com/user-attachments/assets/022066c7-6425-478b-bb1c-5dfb359cf2bb" />
 
 A full-stack air quality monitoring application for 10 major Texas cities.
 
