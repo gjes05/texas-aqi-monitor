@@ -4,8 +4,6 @@ import ChatSidebar from './components/ChatSidebar'
 import StationPopup from './components/StationPopup'
 import './App.css'
 
-const API_BASE = import.meta.env.VITE_API_URL
-
 export default function App() {
   const [stations, setStations] = useState([])
   const [loading, setLoading] = useState(true)
@@ -20,7 +18,7 @@ export default function App() {
 
     const attempt = async (n) => {
       try {
-        const res = await fetch(`${API_BASE}/api/aqi`)
+        const res = await fetch('/api/aqi')
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
         if (cancelled) return
@@ -36,7 +34,7 @@ export default function App() {
           setLoadingMsg('Backend is starting up… please wait')
           setTimeout(() => { if (!cancelled) attempt(n + 1) }, RETRY_DELAY_MS)
         } else {
-          setError('Could not reach the backend. Check that VITE_API_URL is set correctly.')
+          setError('Could not reach the backend.')
           setLoading(false)
         }
       }
@@ -46,7 +44,6 @@ export default function App() {
     return () => { cancelled = true }
   }, [])
 
-  // useCallback keeps the reference stable so AQIMap's effect doesn't re-run
   const handleStationSelect = useCallback(attrs => setSelectedStation(attrs), [])
 
   return (
@@ -78,14 +75,13 @@ export default function App() {
           )}
         </div>
 
-        <ChatSidebar apiBase={API_BASE} />
+        <ChatSidebar />
       </div>
 
       {selectedStation && (
         <StationPopup
           station={selectedStation}
           onClose={() => setSelectedStation(null)}
-          apiBase={API_BASE}
         />
       )}
     </div>

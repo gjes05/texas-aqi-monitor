@@ -50,7 +50,7 @@ function AqiDot(props) {
   )
 }
 
-export default function StationPopup({ station, onClose, apiBase }) {
+export default function StationPopup({ station, onClose }) {
   const [history, setHistory] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -61,14 +61,14 @@ export default function StationPopup({ station, onClose, apiBase }) {
     setError(null)
     setHistory(null)
 
-    fetch(`${apiBase}/api/history/${station.uid}`)
+    fetch(`/api/history/${station.uid}`)
       .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.json()
       })
       .then(data => { setHistory(data); setLoading(false) })
       .catch(err => { setError(`Failed to load trend data: ${err.message}`); setLoading(false) })
-  }, [station?.uid, apiBase])
+  }, [station?.uid])
 
   const trend = history?.trend ?? []
   const yMax = Math.max(200, ...trend.map(d => d.aqi ?? 0)) + 40

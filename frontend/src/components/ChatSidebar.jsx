@@ -8,7 +8,7 @@ const SUGGESTIONS = [
   'Compare air quality between Dallas and San Antonio.',
 ]
 
-export default function ChatSidebar({ apiBase }) {
+export default function ChatSidebar() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -33,7 +33,7 @@ export default function ChatSidebar({ apiBase }) {
     setLoading(true)
 
     try {
-      const res = await fetch(`${apiBase}/api/chat`, {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question }),
