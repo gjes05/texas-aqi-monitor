@@ -16,14 +16,6 @@ A full-stack air quality monitoring application for 10 major Texas cities.
 | AQI data | WAQI (World Air Quality Index) API |
 | Charts | Recharts |
 
-## Screenshots
-
-> Add screenshots to a `docs/screenshots/` folder and update the paths below.
-
-| Map view | Station popup | AI chat |
-|---|---|---|
-| ![Map](docs/screenshots/map.png) | ![Popup](docs/screenshots/popup.png) | ![Chat](docs/screenshots/chat.png) |
-
 ## Features
 
 - Live AQI data for Houston, Dallas, Austin, San Antonio, El Paso, Fort Worth, Lubbock, Midland, Beaumont, and Corpus Christi
