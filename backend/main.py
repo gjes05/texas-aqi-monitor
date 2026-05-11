@@ -20,6 +20,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
+
 WAQI_TOKEN = os.getenv("WAQI_TOKEN", "demo")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
