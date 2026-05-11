@@ -1,0 +1,149 @@
+.popup-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  width: 540px;
+  max-width: calc(100vw - 40px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.popup-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #0f172a;
+  background: #162032;
+}
+
+.popup-city {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin-bottom: 5px;
+}
+
+.popup-meta {
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.popup-sep {
+  margin: 0 6px;
+  color: #334155;
+}
+
+.popup-category {
+  color: #64748b;
+}
+
+.popup-close {
+  background: none;
+  border: none;
+  color: #475569;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.popup-close:hover {
+  color: #e2e8f0;
+  background: #334155;
+}
+
+/* ── Body ── */
+.popup-body {
+  padding: 16px 20px 20px;
+}
+
+.section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #475569;
+  margin-bottom: 14px;
+}
+
+/* ── Loading / error states ── */
+.chart-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 140px;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.chart-error {
+  color: #f87171;
+}
+
+.popup-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #1e40af44;
+  border-top-color: #60a5fa;
+  border-radius: 50%;
+  animation: pspin 0.9s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pspin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Recharts custom tooltip ── */
+.chart-tooltip {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 8px 13px;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  line-height: 1.75;
+}
+
+.tooltip-date {
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 2px;
+}
+
+/* ── Footer ── */
+.popup-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #0f172a;
+  font-size: 0.8rem;
+}
+
+.footer-label {
+  color: #475569;
+}
+
+.footer-value {
+  color: #94a3b8;
+}

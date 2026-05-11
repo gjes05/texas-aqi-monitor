@@ -1,0 +1,73 @@
+.map-error-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #0f172a;
+  color: #f87171;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 24px;
+  z-index: 10;
+}
+
+.map-error-icon {
+  font-size: 2rem;
+}
+
+.aqi-legend {
+  position: absolute;
+  bottom: 28px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 12px 14px;
+  z-index: 10;
+  min-width: 220px;
+  pointer-events: none;
+}
+
+.legend-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.legend-row:last-child {
+  margin-bottom: 0;
+}
+
+.legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.legend-label {
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  flex: 1;
+}
+
+.legend-range {
+  font-size: 0.72rem;
+  color: #475569;
+  font-variant-numeric: tabular-nums;
+}
