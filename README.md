@@ -1,14 +1,34 @@
 # Texas AQI Monitor
 
-A full-stack air quality monitoring application for 10 major Texas cities. Built with **FastAPI**, **React + Vite**, **ArcGIS JS SDK**, and **Google Gemini**.
+**Live demo: [texas-aqi-monitor.vercel.app](https://texas-aqi-monitor.vercel.app)**
+
+A full-stack air quality monitoring application for 10 major Texas cities.
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18 + Vite, deployed on **Vercel** |
+| Backend | FastAPI + Uvicorn, deployed on **Render** |
+| Map | ArcGIS JS SDK 4.29 (CDN) |
+| AI chat | Google Gemini 2.5 Flash |
+| AQI data | WAQI (World Air Quality Index) API |
+| Charts | Recharts |
+
+## Screenshots
+
+> Add screenshots to a `docs/screenshots/` folder and update the paths below.
+
+| Map view | Station popup | AI chat |
+|---|---|---|
+| ![Map](docs/screenshots/map.png) | ![Popup](docs/screenshots/popup.png) | ![Chat](docs/screenshots/chat.png) |
 
 ## Features
 
-- Live AQI data fetched from the [WAQI API](https://waqi.info) for Houston, Dallas, Austin, San Antonio, El Paso, Fort Worth, Lubbock, Midland, Beaumont, and Corpus Christi
-- Interactive ArcGIS map with color-coded station markers (green → yellow → orange → red)
-- AQI value labels rendered directly on each marker
-- Clickable popups showing station name, AQI value, and health category
-- AI-powered chat sidebar (Gemini 1.5 Flash) that answers natural language questions grounded in live data
+- Live AQI data for Houston, Dallas, Austin, San Antonio, El Paso, Fort Worth, Lubbock, Midland, Beaumont, and Corpus Christi
+- Interactive ArcGIS map with color-coded markers (green → yellow → orange → red) and AQI value labels
+- Click any marker to open a 7-day trend chart with color-coded AQI bands and dominant pollutant info
+- AI-powered chat sidebar (Gemini) that answers natural language questions grounded in live data
 
 ## Prerequisites
 
@@ -16,31 +36,24 @@ A full-stack air quality monitoring application for 10 major Texas cities. Built
 - **Node.js 18+**
 - API keys for [WAQI](https://aqicn.org/data-platform/token/), [Gemini](https://aistudio.google.com/apikey), and [ArcGIS](https://developers.arcgis.com/)
 
-## Setup
+## Local Development
 
-### 1. Clone and configure keys
+### 1. Configure backend keys
 
 ```bash
-# Copy the example and fill in your keys
 cp .env.example backend/.env
-cp .env.example frontend/.env
 ```
 
-Edit `backend/.env` — keep only these two lines:
+Edit `backend/.env`:
 ```
-WAQI_TOKEN=your_waqi_token
+WAQI_TOKEN=demo
 GEMINI_API_KEY=your_gemini_api_key
 ```
 
-Edit `frontend/.env` — keep only this line:
-```
-VITE_ARCGIS_API_KEY=your_arcgis_api_key
-```
+> `WAQI_TOKEN=demo` works for testing but is rate-limited.
+> ArcGIS keys need the **Basemaps** scope enabled.
 
-> **Tip:** `WAQI_TOKEN=demo` works out of the box for testing, but is rate-limited.  
-> ArcGIS keys need the **Basemaps** scope enabled in your developer dashboard.
-
-### 2. Backend
+### 2. Run the backend
 
 ```bash
 cd backend
@@ -55,12 +68,16 @@ pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
-The API is now available at `http://localhost:8000`.
+API available at `http://localhost:8000`.
 
-- `GET  /api/aqi` — returns live AQI data for all 10 cities
-- `POST /api/chat` — accepts `{ "question": "..." }`, returns `{ "answer": "..." }`
+| Endpoint | Description |
+|---|---|
+| `GET /api/aqi` | Live AQI data for all 10 cities |
+| `GET /api/history/{uid}` | 7-day forecast trend for a station |
+| `POST /api/chat` | Gemini answer grounded in live AQI data |
+| `GET /health` | Health check |
 
-### 3. Frontend
+### 3. Run the frontend
 
 ```bash
 cd frontend
@@ -68,7 +85,22 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser.
+Open `http://localhost:5173`. The Vite dev server proxies `/api/*` to `localhost:8000` automatically — no environment variables needed.
+
+## Deployment
+
+### Backend → Render
+
+1. Create a new **Web Service** pointed at the `backend/` directory
+2. Set build command: `pip install -r requirements.txt`
+3. Set start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+4. Add environment variables: `WAQI_TOKEN`, `GEMINI_API_KEY`
+5. Set health check path to `/health`
+
+### Frontend → Vercel
+
+1. Create a new project pointed at the `frontend/` directory
+2. No environment variables required — `vercel.json` proxies `/api/*` to the Render backend
 
 ## AQI Categories
 
@@ -84,15 +116,17 @@ Open `http://localhost:5173` in your browser.
 ```
 texas-aqi-app/
 ├── backend/
-│   ├── main.py          # FastAPI app (AQI + Chat endpoints)
+│   ├── main.py              # FastAPI: /api/aqi, /api/chat, /api/history, /health
 │   └── requirements.txt
 ├── frontend/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── components/
-│   │   │   ├── AQIMap.jsx       # ArcGIS map with markers and legend
-│   │   │   └── ChatSidebar.jsx  # Gemini-powered chat UI
-│   └── vite.config.js
+│   ├── vercel.json          # Proxies /api/* to Render backend
+│   ├── vite.config.js       # Proxies /api/* to localhost:8000 in dev
+│   └── src/
+│       ├── App.jsx
+│       └── components/
+│           ├── AQIMap.jsx       # ArcGIS map, markers, legend, click handler
+│           ├── ChatSidebar.jsx  # Gemini chat UI
+│           └── StationPopup.jsx # 7-day trend chart (Recharts)
 ├── .env.example
 ├── .gitignore
 └── README.md
