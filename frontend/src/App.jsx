@@ -4,7 +4,7 @@ import ChatSidebar from './components/ChatSidebar'
 import StationPopup from './components/StationPopup'
 import './App.css'
 
-const API_BASE = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '')
+const API_BASE = import.meta.env.VITE_API_URL
 
 export default function App() {
   const [stations, setStations] = useState([])
@@ -27,7 +27,7 @@ export default function App() {
         setLoading(false)
       })
       .catch(() => {
-        setError('Could not reach the backend. Make sure it is running on port 8000.')
+        setError('Could not reach the backend. Check that VITE_API_URL is set correctly.')
         setLoading(false)
       })
   }, [])
